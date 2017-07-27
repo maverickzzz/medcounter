@@ -67,6 +67,7 @@ app.controller("myCtrl", function($scope) {
     	if (typeof(Storage) !== "undefined") {
     		if (localStorage.data) {
     			$scope.players = angular.fromJson(localStorage.data);
+    			$scope.calculateTotal();
     			console.log($scope.players);	
     		} else {
     			$scope.players = [];
