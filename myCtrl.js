@@ -66,8 +66,10 @@ app.controller("myCtrl", function($scope) {
 
     $scope.loadLocalStorage = function() {
     	if (typeof(Storage) !== "undefined") {
-    		$scope.players = angular.fromJson(localStorage.data);
-    		console.log($scope.players);
+    		if (angular.fromJson(localStorage.data) !== 'undefined') {
+    			$scope.players = angular.fromJson(localStorage.data);
+    			console.log($scope.players);	
+    		}
 		} else {
 			$scope.hideAlert = false;
 		}    	
