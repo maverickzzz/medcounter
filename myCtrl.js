@@ -60,13 +60,17 @@ app.controller("myCtrl", function($scope) {
 		}
     }
 
-    if (typeof(Storage) === "undefined") {
+    if (typeof(Storage) == "undefined") {
 		$scope.hideAlert = false;
 	}
 
     $scope.loadLocalStorage = function() {
-    	$scope.players = angular.fromJson(localStorage.data);
-    	console.log($scope.players);
+    	if (typeof(Storage) !== "undefined") {
+    		$scope.players = angular.fromJson(localStorage.data);
+    		console.log($scope.players);
+		} else {
+			$scope.hideAlert = false;
+		}    	
     }
 
     $scope.loadLocalStorage();
