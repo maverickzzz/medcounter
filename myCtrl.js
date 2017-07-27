@@ -3,8 +3,11 @@ app.controller("myCtrl", function($scope) {
 
     $scope.players = [];
     $scope.totalfee = 0;
-    $scope.players = [{id: 0, name: "asdf", shuttlecock: "0", fee: "0"}];
+    // $scope.players = [{id: 0, name: "asdf", shuttlecock: "0", fee: "0"}];
     $scope.hideAlert = true;
+    if (typeof(Storage) == "undefined") {
+		$scope.hideAlert = false;
+	}	
 
     $scope.addPlayer = function() {
     	if ($scope.name) {
@@ -60,15 +63,13 @@ app.controller("myCtrl", function($scope) {
 		}
     }
 
-    if (typeof(Storage) == "undefined") {
-		$scope.hideAlert = false;
-	}
-
     $scope.loadLocalStorage = function() {
     	if (typeof(Storage) !== "undefined") {
-    		if (angular.fromJson(localStorage.data) !== 'undefined') {
+    		if (localStorage.data) {
     			$scope.players = angular.fromJson(localStorage.data);
     			console.log($scope.players);	
+    		} else {
+    			$scope.players = [];
     		}
 		} else {
 			$scope.hideAlert = false;
