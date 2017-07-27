@@ -51,6 +51,7 @@ app.controller("myCtrl", function($scope) {
     	for (i = 0; i < $scope.players.length; i++) {
     		$total += parseInt($scope.players[i].fee);
     	}
+    	console.log($total);
     	$scope.totalfee = $total;
     }
 
