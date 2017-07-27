@@ -47,7 +47,7 @@ app.controller("myCtrl", function($scope) {
     }
 
     $scope.calculateTotal = function() {
-    	$total = 0
+    	$total = 0;
     	for (i = 0; i < $scope.players.length; i++) {
     		$total += parseInt($scope.players[i].fee);
     	}
