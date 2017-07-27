@@ -3,7 +3,8 @@ app.controller("myCtrl", function($scope) {
 
     $scope.players = [];
     $scope.totalfee = 0;
-    // $scope.players = [{id: 0, name: "asdf", shuttlecock: "0", fee: "0"}];
+    $scope.players = [{id: 0, name: "asdf", shuttlecock: "0", fee: "0"}];
+    $scope.hideAlert = true;
 
     $scope.addPlayer = function() {
     	if ($scope.name) {
@@ -14,7 +15,7 @@ app.controller("myCtrl", function($scope) {
 	    		fee: 0
 	    	});
 	    	$scope.name = "";
-	    	console.log($scope.players);
+	    	$scope.updateLocalStorage();
 	    }
     };
 
@@ -23,12 +24,14 @@ app.controller("myCtrl", function($scope) {
     	$scope.name = "";
     	$scope.shuttlecockPriceEach = 12000;
     	$scope.totalfee = 0;
+    	$scope.updateLocalStorage();
     }
 
     $scope.addShuttlecock = function(id) {
     	$scope.players[id].shuttlecock = parseInt($scope.players[id].shuttlecock) + 1;
     	$scope.players[id].fee = parseInt($scope.players[id].shuttlecock) * $scope.shuttlecockPriceEach / 4;
     	$scope.calculateTotal();
+    	$scope.updateLocalStorage();
     }
 
     $scope.minusShuttlecock = function(id) {
@@ -36,6 +39,7 @@ app.controller("myCtrl", function($scope) {
     		$scope.players[id].shuttlecock = parseInt($scope.players[id].shuttlecock) - 1;
     		$scope.players[id].fee = parseInt($scope.players[id].shuttlecock) * $scope.shuttlecockPriceEach / 4;
     		$scope.calculateTotal();
+    		$scope.updateLocalStorage();
     	}
     }
 
@@ -46,4 +50,24 @@ app.controller("myCtrl", function($scope) {
     	}
     	$scope.totalfee = $total;
     }
+
+    $scope.updateLocalStorage = function() {
+    	if (typeof(Storage) !== "undefined") {
+    		localStorage.data = angular.toJson($scope.players);
+    		console.log(localStorage.data);
+		} else {
+			$scope.hideAlert = false;
+		}
+    }
+
+    if (typeof(Storage) === "undefined") {
+		$scope.hideAlert = false;
+	}
+
+    $scope.loadLocalStorage = function() {
+    	$scope.players = angular.fromJson(localStorage.data);
+    	console.log($scope.players);
+    }
+
+    $scope.loadLocalStorage();
 });
