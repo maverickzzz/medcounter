@@ -23,11 +23,25 @@ app.controller("myCtrl", function($scope) {
     };
 
     $scope.reset = function() {
+        $scope.name = "";
+
+        for (i = 0; i < $scope.players.length; i++) {
+            $scope.players[i].shuttlecock = 0;
+            $scope.players[i].fee = 0;
+        }
+
+        $scope.totalfee = 0;
+        $scope.updateLocalStorage();
+        $scope.hideReset = false;
+    }
+
+    $scope.resetAll = function() {
     	$scope.players = [];
     	$scope.name = "";
     	$scope.shuttlecockPriceEach = 12000;
     	$scope.totalfee = 0;
     	$scope.updateLocalStorage();
+    	$scope.hideReset = false;
     }
 
     $scope.addShuttlecock = function(id) {
