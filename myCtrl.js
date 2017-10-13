@@ -1,5 +1,5 @@
 app.controller("myCtrl", function($scope) {
-	$scope.bottles = [{id: 0, value: 30}, {id: 1, value: 30}];
+	$scope.bottles = [{id: 0, name: "Home", value: 30}, {id: 1, name: "Office", value: 30}];
     $scope.hideAlert = true;
     if (typeof(Storage) == "undefined") {
 		$scope.hideAlert = false;
@@ -7,7 +7,7 @@ app.controller("myCtrl", function($scope) {
 
     $scope.reset = function() {
         $scope.bottles = [];
-        $scope.bottles = [{id: 0, value: 30}, {id: 1, value: 30}];
+        $scope.bottles = [{id: 0, name: "Home", value: 30}, {id: 1, name: "Office", value: 30}];
         $scope.updateLocalStorage();
         $scope.hideReset = false;
     }
@@ -40,7 +40,7 @@ app.controller("myCtrl", function($scope) {
     			console.log($scope.bottles);	
     		} else {
                 $scope.bottles = [];
-    			$scope.bottles = [{id: 0, value: 30}, {id: 1, value: 30}];
+    			$scope.bottles = [{id: 0, name: "Home", value: 30}, {id: 1, name: "Office", value: 30}];
     		}
 		} else {
 			$scope.hideAlert = false;
