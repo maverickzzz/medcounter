@@ -1,77 +1,32 @@
 app.controller("myCtrl", function($scope) {
-	$scope.shuttlecockPriceEach = 12000;
-
-    $scope.players = [];
-    $scope.totalfee = 0;
-    // $scope.players = [{id: 0, name: "asdf", shuttlecock: "0", fee: "0"}];
+	$scope.bottles = [{id: 0, value: 30}, {id: 1, value: 30}];
     $scope.hideAlert = true;
     if (typeof(Storage) == "undefined") {
 		$scope.hideAlert = false;
 	}	
 
-    $scope.addPlayer = function() {
-    	if ($scope.name) {
-	    	$scope.players.push({
-	    		id: $scope.players.length,
-	    		name: $scope.name,
-	    		shuttlecock: "0",
-	    		fee: 0
-	    	});
-	    	$scope.name = "";
-	    	$scope.updateLocalStorage();
-	    }
-    };
-
     $scope.reset = function() {
-        $scope.name = "";
-
-        for (i = 0; i < $scope.players.length; i++) {
-            $scope.players[i].shuttlecock = 0;
-            $scope.players[i].fee = 0;
-        }
-
-        $scope.totalfee = 0;
+        $scope.bottles = [];
+        $scope.bottles = [{id: 0, value: 30}, {id: 1, value: 30}];
         $scope.updateLocalStorage();
         $scope.hideReset = false;
     }
 
-    $scope.resetAll = function() {
-    	$scope.players = [];
-    	$scope.name = "";
-    	$scope.shuttlecockPriceEach = 12000;
-    	$scope.totalfee = 0;
-    	$scope.updateLocalStorage();
-    	$scope.hideReset = false;
-    }
-
-    $scope.addShuttlecock = function(id) {
-    	$scope.players[id].shuttlecock = parseInt($scope.players[id].shuttlecock) + 1;
-    	$scope.players[id].fee = parseInt($scope.players[id].shuttlecock) * $scope.shuttlecockPriceEach / 4;
-    	$scope.calculateTotal();
+    $scope.addValue = function(id) {
+    	$scope.bottles[id].value = parseInt($scope.bottles[id].value) + 1;
     	$scope.updateLocalStorage();
     }
 
-    $scope.minusShuttlecock = function(id) {
-    	if (parseInt($scope.players[id].shuttlecock) > 0) {
-    		$scope.players[id].shuttlecock = parseInt($scope.players[id].shuttlecock) - 1;
-    		$scope.players[id].fee = parseInt($scope.players[id].shuttlecock) * $scope.shuttlecockPriceEach / 4;
-    		$scope.calculateTotal();
+    $scope.minusValue = function(id) {
+    	if (parseInt($scope.bottles[id].value) > 0) {
+    		$scope.bottles[id].value = parseInt($scope.bottles[id].value) - 1;
     		$scope.updateLocalStorage();
     	}
     }
 
-    $scope.calculateTotal = function() {
-    	$total = 0;
-    	for (i = 0; i < $scope.players.length; i++) {
-    		$total += parseInt($scope.players[i].fee);
-    	}
-    	console.log($total);
-    	$scope.totalfee = $total;
-    }
-
     $scope.updateLocalStorage = function() {
     	if (typeof(Storage) !== "undefined") {
-    		localStorage.data = angular.toJson($scope.players);
+    		localStorage.data = angular.toJson($scope.bottles);
     		console.log(localStorage.data);
 		} else {
 			$scope.hideAlert = false;
@@ -81,11 +36,11 @@ app.controller("myCtrl", function($scope) {
     $scope.loadLocalStorage = function() {
     	if (typeof(Storage) !== "undefined") {
     		if (localStorage.data) {
-    			$scope.players = angular.fromJson(localStorage.data);
-    			$scope.calculateTotal();
-    			console.log($scope.players);	
+    			$scope.bottles = angular.fromJson(localStorage.data);
+    			console.log($scope.bottles);	
     		} else {
-    			$scope.players = [];
+                $scope.bottles = [];
+    			$scope.bottles = [{id: 0, value: 30}, {id: 1, value: 30}];
     		}
 		} else {
 			$scope.hideAlert = false;

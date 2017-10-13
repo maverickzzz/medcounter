@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="myApp">
 	<head>
-		<title>Shuttlecock Fee Counter</title>
+		<title>Med Counter</title>
 		<meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	    <meta name="description" content="">
@@ -18,121 +18,28 @@
 	<body ng-controller="myCtrl">
 		<div class="container">
 			<div class="alert alert-warning" role="alert" ng-hide="hideAlert">This browser does not support local storage.</div>
-			<h1>Shuttlecock Fee Counter</h1>
-			<div id="accordion" role="tablist" aria-multiselectable="true">
-			  <div class="card">
-			    <div class="card-header" role="tab" id="headingOne">
-			      <h5 class="mb-0">
-			        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-			          New Player
-			        </a>
-			      </h5>
-			    </div>
-
-			    <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-			      <div class="card-block">					
-					<div class="form-group">
-					    <label for="addPlayer">Add Player</label>
-					    <input type="text" class="form-control" id="addPlayer" aria-describedby="emailHelp" placeholder="Enter player name" ng-model="name">
+			<h1 class="text-center">Med Counter</h1>
+			<div class="row justify-content-md-center" ng-repeat="bottle in bottles">
+				<div class="col-5 card">
+					<h2>Bottle {{bottle.id + 1}}</h2>
+					<div class="row">
+						<div class="col-4">
+							<button type="submit" class="btn" ng-click="minusValue(bottle.id)">-</button>
+						</div>
+						<div class="col-4">
+							<input type="text" class="form-control" ng-model="bottle.value" />
+						</div>
+						<div class="col-4">
+							<button type="submit" class="btn" ng-click="addValue(bottle.id)">+</button>	
+						</div>
 					</div>
-					<div class="form-group">
-						<button type="submit" class="btn btn-primary" ng-click="addPlayer()">Add</button>
-					</div>
-			      </div>
-			    </div>
-			  </div>
-			  <div class="card">
-			    <div class="card-header" role="tab" id="headingTwo">
-			      <h5 class="mb-0">
-			        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-			          Tracking
-			        </a>
-			      </h5>
-			    </div>
-			    <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo">
-			      <div class="card-block">
-			        <div class="form-group">
-						<h2>Player List</h2>
-						<table class="table table-striped">
-							<thead class="thead-inverse">
-								<tr>
-									<th width="40%">Name</th>
-									<th width="60%">Used</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="player in players">
-									<td style="vertical-align: middle;">{{player.name}}</td>
-									<td>
-										<button type="submit" class="btn" ng-click="minusShuttlecock(player.id)">-</button>
-										<span style="padding: .5rem 1rem; width: 3rem; display: inline-block; text-align: center;">{{player.shuttlecock}}</span>
-										<button type="submit" class="btn" ng-click="addShuttlecock(player.id)">+</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-			      </div>
-			    </div>
-			  </div>
-			  <div class="card">
-			    <div class="card-header" role="tab" id="headingThree">
-			      <h5 class="mb-0">
-			        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-			          Summary
-			        </a>
-			      </h5>
-			    </div>
-			    <div id="collapseThree" class="collapse" role="tabpanel" aria-labelledby="headingThree">
-			      <div class="card-block">
-			        <div class="form-group">
-						<h2>Summary</h2>
-						<table class="table table-striped">
-							<thead class="thead-inverse">
-								<tr>
-									<th width="60%">Name</th>
-									<th width="40%">Fee</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr ng-repeat="player in players">
-									<td>{{player.name}}</td>
-									<td>{{player.fee | number }}</td>
-								</tr>
-							</tbody>
-							<tfoot class="thead-inverse">
-								<tr>
-									<th>Total</th>
-									<th>{{totalfee | number }}</th>
-								</tr>
-							</tfoot>
-						</table>
-					</div>
-			      </div>
-			    </div>
-			  </div>
-			  <div class="card">
-			    <div class="card-header" role="tab" id="headingFour">
-			      <h5 class="mb-0">
-			        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-			          Settings
-			        </a>
-			      </h5>
-			    </div>
-			    <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour">
-			      <div class="card-block">
-			      	<div class="form-group">
-					    <label for="shuttlecockPriceEach">Shuttlecock Price Each</label>
-					    <input type="number" class="form-control" id="shuttlecockPriceEach" ng-model="shuttlecockPriceEach">
-					</div>
-			        <div class="form-group">
-						<button type="submit" class="btn btn-danger" ng-click="reset()">Reset</button>
-						<button type="submit" class="btn btn-danger" ng-click="resetAll()">Reset All</button>
-					</div>
-			      </div>
-			    </div>
-			  </div>
-			</div>			
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 text-center">
+					<button type="submit" class="btn btn-danger" ng-click="reset()">Reset All</button>
+				</div>
+			</div>
 	    </div><!-- /.container -->
 
 	<script src="myApp.js"></script>
